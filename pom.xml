@@ -18,7 +18,7 @@
 		<appengine.target.version>1.9.67</appengine.target.version>				
 		<maven.compiler.source>1.8</maven.compiler.source>
   		<maven.compiler.target>1.8</maven.compiler.target>
-  		<jersey.version>1.17.1</jersey.version>
+  		<jersey.version>1.19.4</jersey.version>
   		
   		<!-- Conexion a base de datos -->
   		<cloudsql.url>jdbc:google:mysql://gleaming-nomad-220720:us-central1:dbindra/dbriesgo</cloudsql.url>
