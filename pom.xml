@@ -1,0 +1,249 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.tp2.modulo.sgr</groupId>
+	<artifactId>modulo-riesgos</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<!-- <name>Google App Engine REST Archetype</name> -->
+	<!-- <url>http://github.com/vysokyj/gae-rest-archetype</url> -->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<appengine.maven.plugin.version>1.3.2</appengine.maven.plugin.version>
+    	<appengine.api.sdk.version>1.9.67</appengine.api.sdk.version>
+		<appengine.target.version>1.9.67</appengine.target.version>				
+		<maven.compiler.source>1.8</maven.compiler.source>
+  		<maven.compiler.target>1.8</maven.compiler.target>
+  		<jersey.version>1.17.1</jersey.version>
+  		
+  		<!-- Conexion a base de datos -->
+  		<cloudsql.url>jdbc:google:mysql://gleaming-nomad-220720:us-central1:dbindra/dbriesgo</cloudsql.url>
+    	<cloudsql.url.dev>jdbc:mysql://104.154.86.66/dbriesgo</cloudsql.url.dev>
+    	
+	</properties>
+
+	<repositories>
+		<!-- JAX-RS -->
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<!-- Google App Engine dependencies -->
+		<dependency>
+		      <groupId>com.google.appengine</groupId>
+		      <artifactId>appengine-endpoints</artifactId>
+		      <version>1.9.53</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.endpoints</groupId>
+		    <artifactId>endpoints-framework</artifactId>
+		    <version>2.1.2</version>
+		</dependency>
+		
+		<dependency>
+			<!-- This library provides experimental GAE features -->
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-labs</artifactId>
+			<version>${appengine.target.version}</version>
+		</dependency>
+		<dependency>
+			<!-- Required for GAE based unit tests -->
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${appengine.target.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<!-- Required for GAE based unit tests -->
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${appengine.target.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<!-- Required for GAE based unit tests -->
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-tools-sdk</artifactId>
+			<version>${appengine.target.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Google App Engine provided libraries -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+			<!-- TODO: Test it! In archetype wad not provided originally. -->
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.4</version>
+			<scope>provided</scope>
+		</dependency>	
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jpa_2.0_spec</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<!-- JAX-RS API -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-servlet</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<!-- Support for JSON, Jackson library included. -->
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>${jersey.version}</version>
+			<exclusions>
+				<!-- Force disable Jettison - Jackson is far better! -->
+				<exclusion>
+					<groupId>org.codehaus.jettison</groupId>
+					<artifactId>jettison</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.6</version>
+			<!-- Not available in GAE, but used for compilation! -->
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Common Apache libraries -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+		<!-- Common test Dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.0</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.25</version>
+	    </dependency>
+    
+	</dependencies>
+
+	<build>
+		<finalName>example</finalName>
+		<plugins>
+			<!-- Start plugins from GAE archetype -->
+			<plugin>
+	           <artifactId>maven-compiler-plugin</artifactId>
+	           <version>3.1</version>
+	           <configuration>
+	               <source>1.8</source> <!-- yours Java version -->
+	               <target>1.8</target> <!-- yours Java version -->
+	           </configuration>
+	       </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<archiveClasses>true</archiveClasses>
+					<webResources>
+						<!-- in order to interpolate version from pom into appengine-web.xml -->
+						<resource>
+							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+							<filtering>true</filtering>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+			    <groupId>com.google.cloud.tools</groupId>
+			    <artifactId>endpoints-framework-maven-plugin</artifactId>
+			    <version>1.0.2</version>
+			    <configuration>
+			        <!-- plugin configuration -->
+			        <hostname>YOUR-PROJECT-ID.appspot.com</hostname>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <groupId>com.google.cloud.tools</groupId>
+			    <artifactId>appengine-maven-plugin</artifactId>
+			    <version>1.3.2</version>
+			    <configuration>
+			        <!-- deploy configuration -->
+			    </configuration>
+			</plugin>
+			<plugin>
+			     <groupId>com.google.cloud.tools</groupId>
+			     <artifactId>appengine-maven-plugin</artifactId>
+			     <version>${appengine.maven.plugin.version}</version>
+			  </plugin>
+			<!-- End plugins from GAE archetype -->
+			
+		</plugins>
+
+	</build>
+</project>
