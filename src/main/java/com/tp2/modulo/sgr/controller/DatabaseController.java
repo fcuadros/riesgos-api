@@ -14,10 +14,10 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.appengine.api.utils.SystemProperty;
 
-@Path("/conexion")
+@Path("/database")
 public class DatabaseController {
 
-	@Path("/test")
+	@Path("/conexion")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public String testConexion()

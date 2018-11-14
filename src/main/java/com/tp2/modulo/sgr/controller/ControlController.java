@@ -17,14 +17,13 @@ import com.tp2.modulo.sgr.model.Control;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
 import com.tp2.modulo.sgr.service.ControlService;
 
-@Path("/c")
+@Path("/controles")
 public class ControlController {
 
 	ControlService controlService = new ControlService();
 	Gson gson = new Gson();
 	
 	@GET
-	@Path("/controles")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getControles() {
 		
@@ -34,8 +33,18 @@ public class ControlController {
 		return json;
 	}
 	
+	@GET
+	@Path("/{idControl}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getControl() {
+		
+		ArrayList<Control> listaControles = controlService.getControles();
+		String json = gson.toJson(listaControles);
+		
+		return json;
+	}
+	
 	@POST
-	@Path("/control")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String registrarControl(Control control) {
@@ -47,7 +56,7 @@ public class ControlController {
 	}
 	
 	@PUT
-	@Path("/control/{idControl}")
+	@Path("/{idControl}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String actualizarControl(@PathParam("idControl") int idControl, Control control) {
@@ -59,7 +68,7 @@ public class ControlController {
 	}
 	
 	@DELETE
-	@Path("/control/{idControl}")
+	@Path("/{idControl}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String eliminarControl(@PathParam("idControl") int idControl) {
