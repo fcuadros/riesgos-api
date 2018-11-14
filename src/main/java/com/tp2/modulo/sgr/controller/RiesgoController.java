@@ -27,7 +27,13 @@ public class RiesgoController{
 	RiesgoService riesgoService = new RiesgoService();
 	Gson gson = new Gson();
 	
-	//	Lista todos los riesgos
+	//	GET /riesgos - Devuelve una lista de riesgos
+	//	GET /riesgos/12 - Devuelve un riesgo especifico #12
+	//	POST /riesgos - Crea un nuevo riesgo
+	//	PUT /riesgos/12 - Actualiza un riesgo #12
+	//	PATCH /riesgos/12 - Actualiza parcialmente un riesgo #12
+	//	DELETE /riesgos/12 - Elimina un riesgo #12
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getRiesgos() {
@@ -38,19 +44,17 @@ public class RiesgoController{
 		return json;
 	}
 	
-	//	Lista un riesgo por id
 	@GET
 	@Path("/{riesgoId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getRiesgo() {
+	public String getRiesgo(@PathParam("riesgoId") int idRiesgo) {
 		
-		ArrayList<Riesgo> listaRiesgos = riesgoService.getRiesgos();
-		String json = gson.toJson(listaRiesgos);
+		Riesgo riesgo = riesgoService.getRiesgo(idRiesgo);
+		String json = gson.toJson(riesgo);
 		
 		return json;
 	}
 	
-	// Registra un riesgo
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +66,6 @@ public class RiesgoController{
 		return json;
 	}
 	
-	// Actualiza un riesgo por id
 	@PUT
 	@Path("/{riesgoId}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -75,7 +78,6 @@ public class RiesgoController{
 		return json;
 	}
 	
-	// Elimina un riesgo por id
 	@DELETE
 	@Path("/{riesgoId}")
 	@Consumes(MediaType.APPLICATION_JSON)

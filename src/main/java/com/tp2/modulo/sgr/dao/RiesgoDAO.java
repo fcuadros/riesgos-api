@@ -199,7 +199,7 @@ public class RiesgoDAO {
 		
 		ArrayList<Riesgo> listaRiesgos = new ArrayList<Riesgo>();
 		
-		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Riesgo()}");) {
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Riesgos()}");) {
 			
 			boolean hadResults = cs.execute();
 			
@@ -240,6 +240,49 @@ public class RiesgoDAO {
 		}
 		
 		return listaRiesgos;
+	}
+	
+	public Riesgo getRiesgo(int idRiesgo) {
+		
+		Riesgo riesgo = new Riesgo();
+		
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Riesgo(?)}");) {
+			cs.setInt(1, idRiesgo);
+			boolean hadResults = cs.execute();
+			
+			System.out.println("Stored procedure called successfully!");
+			
+			while (hadResults) {
+				ResultSet resultSet = cs.getResultSet();
+				
+				while (resultSet.next()) {					
+					riesgo.setRiesgoId(resultSet.getInt("cod_riesgo"));
+					riesgo.setNombre(resultSet.getString("no_riesgo"));
+					riesgo.setDescripcion(resultSet.getString("descripcion"));
+					riesgo.setFechaRegistro(resultSet.getDate("fe_registro"));
+					riesgo.setTipo(resultSet.getInt("tx_tipo"));
+					riesgo.setCosto(resultSet.getDouble("nu_costo"));
+					riesgo.setProbabilidad(resultSet.getDouble("nu_probabilidad"));
+					riesgo.setNivelRiesgo(resultSet.getInt("nu_nivelRiesgo"));
+					riesgo.setPersonaIdentificadora(resultSet.getString("tx_personaIdentificadora"));
+					riesgo.setFechaModificacion(resultSet.getDate("fe_modificacion"));
+				}
+				
+				hadResults = cs.getMoreResults();
+			}
+			
+			cs.close();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			try {
+				jdbc.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return riesgo;
 	}
 	
 	public boolean registrarRiesgo(Riesgo riesgo) {
