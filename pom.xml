@@ -164,6 +164,13 @@
 			<!-- Not available in GAE, but used for compilation! -->
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Client http for send mail -->	
+		<dependency>
+		    <groupId>com.mashape.unirest</groupId>
+		    <artifactId>unirest-java</artifactId>
+		    <version>1.4.9</version>
+		</dependency>
 
 		<!-- Common Apache libraries -->
 		<dependency>

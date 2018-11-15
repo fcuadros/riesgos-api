@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 import javax.ws.rs.Path;
 
 import com.tp2.modulo.sgr.model.RespuestaResponse;
@@ -25,7 +27,7 @@ public class AlertaController {
 	@GET
 	@Path("/{correo}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAlertas(@PathParam("correo") String correo) {
+	public String getAlertas(@PathParam("correo") String correo) throws UnirestException {
 		
 		AlertaService alertaService = new AlertaService();		
 		alertaService.sendSimpleMessagesv2(correo, "Notificación de riesgo","cuerpo", null);
