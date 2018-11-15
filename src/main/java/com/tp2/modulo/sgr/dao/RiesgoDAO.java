@@ -55,7 +55,7 @@ public class RiesgoDAO {
 		}
 		return response;
 	}
-	
+	//
 	public ObtenerNivelRiesgoHistoricoResponse obtenerNivelRiesgoHistorico(CalcularNivelRiesgoRequest request) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;

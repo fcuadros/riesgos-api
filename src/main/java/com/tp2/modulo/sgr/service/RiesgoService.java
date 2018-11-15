@@ -29,8 +29,6 @@ public class RiesgoService {
 		
 		List<Object> cantidadTotalRiesgo = new ArrayList<Object>();
 		
-	
-		
 		
 		List<Object> numTotalRiesgosSinControl = new ArrayList<Object>();
 		

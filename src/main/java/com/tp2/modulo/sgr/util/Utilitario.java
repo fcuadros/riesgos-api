@@ -90,8 +90,7 @@ public class Utilitario {
 			varianza = varianza + rango;
 		}
 		
-		varianza = varianza / contador;
-		
+		varianza = varianza / contador;		
 		desvEstandar = Math.sqrt(varianza);
 		
 		return desvEstandar;
