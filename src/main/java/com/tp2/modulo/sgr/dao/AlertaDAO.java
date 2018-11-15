@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import com.tp2.modulo.sgr.database.ConnectionJDBC;
 import com.tp2.modulo.sgr.model.Alerta;
-import com.tp2.modulo.sgr.model.Riesgo;
 
 public class AlertaDAO {
 

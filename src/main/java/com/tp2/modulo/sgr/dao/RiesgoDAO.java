@@ -459,17 +459,12 @@ public class RiesgoDAO {
 		
 		List<Map<String, Object>> arrayCantRiesgoSinControlPorFecha = new ArrayList<Map<String, Object>>();
 		
-		
-		
-		
 		String mes;
 		String anio;
-		int totalRiesgo;
-		
+		int totalRiesgo;		
 		
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
+		ResultSet rs = null;		
 		
 		String sql = "select year(rie.fe_registro) as anio, month(rie.fe_registro) as mes,count(*) as total from tbl_riesgo rie "+
 		"left outer join tbl_control ctl " +
@@ -493,12 +488,6 @@ public class RiesgoDAO {
 				 arrayCantRiesgoSinControlPorFecha.add(mapa);	
 			}
 			
-			
-			
-			
-
-				
-			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
@@ -521,14 +510,10 @@ public class RiesgoDAO {
 		
 		List<Map<String, Object>> arrayCantRiesgoPorFecha = new ArrayList<Map<String, Object>>();
 		
-		
-		
-		
 		String mes;
 		String anio;
 		int totalRiesgo;
-		
-		
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -550,15 +535,11 @@ public class RiesgoDAO {
 				 
 				 mapa.put("meses",mes);				 
 				 mapa.put("totalRiesgo",totalRiesgo);
-				 arrayCantRiesgoPorFecha.add(mapa);
-				 
-				
+				 arrayCantRiesgoPorFecha.add(mapa);				
 			}
 			
 			//arrayCantRiesgoPorFecha.add(mapa);
-				
-	
-				System.out.println(arrayCantRiesgoPorFecha);
+			System.out.println(arrayCantRiesgoPorFecha);
 			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
