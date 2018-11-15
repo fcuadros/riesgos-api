@@ -65,8 +65,8 @@ public class AlertaDAO {
 		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASI_Alerta(?,?,?,?)}");) {
 
 			cs.setString(1, alerta.getCorreo());
-			cs.setString(2, alerta.getOpcion());
-			cs.setString(3, alerta.getEstado());
+			cs.setInt(2, Integer.parseInt(alerta.getOpcion()));
+			cs.setInt(3, Integer.parseInt(alerta.getEstado()));
 			cs.setDate(4, fechaRegistro);
 			cs.execute();
 			System.out.println("Stored procedure called successfully!");
