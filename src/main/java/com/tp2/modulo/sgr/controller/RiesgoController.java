@@ -113,6 +113,18 @@ public class RiesgoController{
 			return json;
 		
 	}
+		  
+	@GET
+	@Path("/getTipoRiesgo")	  
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getTipoRiesgo()
+	{
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();		    
+		ArrayList<TipoRiesgo> listaTipoRiesgo = riesgoService.getListaTipoRiesgo();		    
+		map.put("listaRevisiones", listaTipoRiesgo);
+		String json = gson.toJson(map);
+		return json;
+	}
 	
 	//
 	@POST
