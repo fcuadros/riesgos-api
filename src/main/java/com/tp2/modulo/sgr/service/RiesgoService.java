@@ -11,6 +11,7 @@ import com.tp2.modulo.sgr.model.ActualizarNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.ActualizarNivelRiesgoResponse;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoResponse;
+import com.tp2.modulo.sgr.model.Montecarlo;
 import com.tp2.modulo.sgr.model.NivelRiesgoHistorico;
 import com.tp2.modulo.sgr.model.ObtenerNivelRiesgoHistoricoResponse;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
@@ -203,5 +204,19 @@ public class RiesgoService {
 		return listaTipoRiesgo;
 		
 		
+	}
+	
+	public Montecarlo obtenerPerdidaRiesgos(int cantSimulacion) {
+		Montecarlo montecarlo = riesgoDAO.obtenerPerdidaRiesgos(cantSimulacion);
+		double promedio = 0.0;
+		double desvEstandar = 0.0;
+		
+		promedio = Utilitario.calcularPromedio(montecarlo.getPerdida(), cantSimulacion);
+		desvEstandar = Utilitario.calcularDesviacionEstandar(montecarlo.getPerdida(), cantSimulacion);
+		
+		montecarlo.setPromedio(promedio);
+		montecarlo.setDesvEstandar(desvEstandar);
+		
+		return montecarlo;
 	}
 }

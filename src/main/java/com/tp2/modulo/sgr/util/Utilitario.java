@@ -1,5 +1,7 @@
 package com.tp2.modulo.sgr.util;
 
+import java.util.List;
+
 public class Utilitario {
 
 	public static String concatenarMesAnio(String mes, String anio) {
@@ -31,5 +33,36 @@ public class Utilitario {
 			cadenaRespuesta = "Diciembre".concat("-").concat(anio);
 		}
 		return cadenaRespuesta;
+	}
+	
+	public static double calcularPromedio(List<Double> listaPerdida, int contador) {
+		Double sumaPerdida = 0.0;
+		double promedio = 0.0;
+		
+		for (Double perdida : listaPerdida) {
+			sumaPerdida += perdida;
+		}
+		
+		promedio = sumaPerdida/contador;
+		
+		return promedio;
+	}
+	
+	public static double calcularDesviacionEstandar(List<Double> listaPerdida, int contador) {
+		double promedio = Utilitario.calcularPromedio(listaPerdida, contador);
+		double varianza = 0.0;
+		double desvEstandar = 0.0;
+		
+		for (Double perdida : listaPerdida) {
+			double rango;
+			rango = Math.pow(perdida - promedio, 2f);
+			varianza = varianza + rango;
+		}
+		
+		varianza = varianza / contador;
+		
+		desvEstandar = Math.sqrt(varianza);
+		
+		return desvEstandar;
 	}
 }
