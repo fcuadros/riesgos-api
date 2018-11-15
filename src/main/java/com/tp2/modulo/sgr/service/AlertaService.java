@@ -3,6 +3,7 @@ package com.tp2.modulo.sgr.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -18,10 +19,15 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.tp2.modulo.sgr.dao.AlertaDAO;
 import com.tp2.modulo.sgr.model.Alerta;
+import com.tp2.modulo.sgr.model.Control;
 import com.tp2.modulo.sgr.model.Correo;
-import com.tp2.modulo.sgr.model.RespuestaResponse;;
+import com.tp2.modulo.sgr.model.RespuestaResponse;
+import com.tp2.modulo.sgr.model.Riesgo;
+import com.tp2.modulo.sgr.util.Utilitario;;
 
 public class AlertaService {
+	
+		private static ResourceBundle rb = ResourceBundle.getBundle("template_riesgo");
 	
 		AlertaDAO AlertaDAO = new AlertaDAO();
 		
@@ -39,7 +45,7 @@ public class AlertaService {
                 .queryString("to", to)
                 .queryString("subject", subject)
                 //.queryString("text", "Testing out some Mailgun awesomeness!")
-                .queryString("html", body)
+                .queryString("html", text)
                 .asJson();		
 		        request.getBody();
 
@@ -108,6 +114,7 @@ public class AlertaService {
 			
 			RespuestaResponse respuestaResponse = new RespuestaResponse();
 			boolean respuestaRegistrarRiesgo = false;
+//			String respuestaRegistrarRiesgo="";
 			
 			respuestaRegistrarRiesgo = AlertaDAO.registrarAlerta(alerta);
 			
@@ -119,7 +126,58 @@ public class AlertaService {
 				respuestaResponse.setMensajeRespuesta("Error");
 			}
 			
+//			respuestaResponse.setCodigoRespuesta("0");
+//			respuestaResponse.setMensajeRespuesta(respuestaRegistrarRiesgo);
+			
+			//Evaluar si corresponde notificar correo
+//			Alerta alerta1 = AlertaDAO.getAlerta(63);
+			if(alerta != null){
+				//Si alerta está configura y activada, además riesgo alto
+//				if("1".equals(alerta.getEstado()) 
+//						&& 3 == riesgo.getNivelRiesgo() 
+//						){
+					//Enviar correo
+					enviarMail(null, null, alerta);
+//				}
+			}
+			
+			
 			return respuestaResponse;
+		}
+		
+		
+		public Alerta getAlertaByOpcionMenu(int idOpcionMenu) {
+			Alerta alerta = AlertaDAO.getAlerta(idOpcionMenu);		
+			return alerta;
+		}
+		
+		
+		public void enviarMail(Riesgo riesgo, Control control, Alerta alerta) {
+			
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+
+						if(riesgo !=null && alerta != null){
+							sendSimpleMessagesv2(alerta.getCorreo(),"NOTIFICACION DE CREACION DE RIESGO: ", Utilitario.formatMailRiesgo(rb.getString("nuevo_riesgo"),riesgo,alerta),null);
+						}else if(control != null && alerta != null){
+							sendSimpleMessagesv2(alerta.getCorreo(),"NOTIFICACION DE CREACION DE CONTROL: ", Utilitario.formatMailControl(rb.getString("nuevo_control"),control,alerta),null);
+						}else{
+							sendSimpleMessagesv2(alerta.getCorreo(),"NOTIFICACION DE CREACION DE RIESGO: ", rb.getString("nuevo_riesgo"),null);
+						}
+
+						System.out.println("SendMail: Correo Enviado");
+					} catch (Exception e) {
+
+						System.err.println("SendMail"+ e.getMessage());
+						e.printStackTrace();
+					}finally {
+						System.err.println("SendMail: TerminÃ³ Proceso");
+					}
+				}
+			});
+			thread.start();
 		}
 		
 	}

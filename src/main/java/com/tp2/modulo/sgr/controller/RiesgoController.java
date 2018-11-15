@@ -2,6 +2,7 @@ package com.tp2.modulo.sgr.controller;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -99,19 +100,21 @@ public class RiesgoController{
 		String json = gson.toJson(map);		    
 		return json;
 	}
-		  
+	
 	@GET
-	@Path("/getTipoRiesgo")	  
+	@Path("/obtenerDashboardRiesgosControl")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTipoRiesgo()
-	{
-		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();		    
-		ArrayList<TipoRiesgo> listaTipoRiesgo = riesgoService.getListaTipoRiesgo();		    
-		map.put("listaRevisiones", listaTipoRiesgo);
-		String json = gson.toJson(map);
-		return json;
+	public String obtenerDashboardRiesgosControl(@QueryParam("anio") int anio){	
+		
+			List<?> riesgosControl = riesgoService.obtenerCantRiesgosXControl(anio);
+		
+			String json = gson.toJson(riesgosControl);		    
+			return json;
+		
 	}
 	
+	//
 	@POST
 	@Path("/simulacion/{cantSimulacion}")
 	@Consumes(MediaType.APPLICATION_JSON)

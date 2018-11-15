@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.tp2.modulo.sgr.model.Alerta;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
+import com.tp2.modulo.sgr.model.Riesgo;
 import com.tp2.modulo.sgr.service.AlertaService;
 
 
@@ -54,6 +55,18 @@ public class AlertaController {
 		
 		RespuestaResponse response = alertaService.registrarAlerta(alerta);
 		String json = gson.toJson(response);
+		
+		return json;
+	}
+	
+	
+	@GET
+	@Path("/{alertaByOpcionId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAlertaPorOpcionMenu(@PathParam("alertaByOpcionId") int idOpcionMenu) {
+		
+		Alerta alerta = alertaService.getAlertaByOpcionMenu(idOpcionMenu);
+		String json = gson.toJson(alerta);
 		
 		return json;
 	}
