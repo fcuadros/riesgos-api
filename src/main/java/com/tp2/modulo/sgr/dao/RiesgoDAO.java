@@ -13,6 +13,7 @@ import com.tp2.modulo.sgr.database.ConnectionJDBC;
 import com.tp2.modulo.sgr.model.ActualizarNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoResponse;
+import com.tp2.modulo.sgr.model.Montecarlo;
 import com.tp2.modulo.sgr.model.NivelRiesgoHistorico;
 import com.tp2.modulo.sgr.model.ObtenerNivelRiesgoHistoricoResponse;
 import com.tp2.modulo.sgr.model.Riesgo;
@@ -538,5 +539,50 @@ public class RiesgoDAO {
 		return respuesta;
 	}
 
-	
+	public Montecarlo obtenerPerdidaRiesgos(int cantSimulacion) {
+		Montecarlo respuesta = null;
+		int id = 0;
+		double perdida = 0.0;
+		List<Integer> ids = new ArrayList<Integer>();
+		List<Double> perdidas = new ArrayList<Double>();
+		int inicioSimulacion = 0;
+		
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_MonteCarloSUM(?,?)}");) {
+			cs.setInt(1, inicioSimulacion);
+			cs.setInt(2, cantSimulacion);
+			boolean hadResults = cs.execute();
+			
+			System.out.println("Stored procedure called successfully!");
+			
+			while (hadResults) {
+				ResultSet resultSet = cs.getResultSet();
+				
+				while (resultSet.next()) {
+					respuesta = new Montecarlo();
+					id = resultSet.getInt("id");
+					perdida = resultSet.getDouble("perdida");
+					
+					ids.add(id);
+					perdidas.add(perdida);
+				}
+				
+				respuesta.setId(ids);
+				respuesta.setPerdida(perdidas);
+				
+				hadResults = cs.getMoreResults();
+			}
+			
+			cs.close();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			try {
+				jdbc.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return respuesta;
+	}
 }

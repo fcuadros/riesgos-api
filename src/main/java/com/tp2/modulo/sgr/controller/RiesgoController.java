@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.tp2.modulo.sgr.model.Montecarlo;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
 import com.tp2.modulo.sgr.model.Riesgo;
 import com.tp2.modulo.sgr.model.TipoRiesgo;
@@ -109,6 +110,18 @@ public class RiesgoController{
 		map.put("listaRevisiones", listaTipoRiesgo);
 		String json = gson.toJson(map);
 		return json;
-	}	
+	}
+	
+	@POST
+	@Path("/simulacion/{cantSimulacion}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String obtenerPerdidaRiesgos(@PathParam("cantSimulacion") int cantSimulacion) {
+		Montecarlo response = riesgoService.obtenerPerdidaRiesgos(cantSimulacion);
+		
+		String json = gson.toJson(response);
+		
+		return json;
+	}
 	
 }
