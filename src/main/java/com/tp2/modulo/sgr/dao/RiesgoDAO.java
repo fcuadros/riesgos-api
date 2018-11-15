@@ -460,7 +460,7 @@ public class RiesgoDAO {
 		List<Map<String, Object>> arrayCantRiesgoSinControlPorFecha = new ArrayList<Map<String, Object>>();
 		
 		String mes;
-		String anio;
+		//String anio;
 		int totalRiesgo;		
 		
 		PreparedStatement ps = null;
@@ -480,7 +480,7 @@ public class RiesgoDAO {
 			
 			while (rs.next()) {
 				Map<String,Object> mapa = new HashMap<String,Object>();
-				 anio = rs.getString("anio");
+				 //anio = rs.getString("anio");
 				 mes = rs.getString("mes");
 				 totalRiesgo = Integer.parseInt(rs.getString("total"));
 				 mapa.put("meses",mes);				 
@@ -511,7 +511,7 @@ public class RiesgoDAO {
 		List<Map<String, Object>> arrayCantRiesgoPorFecha = new ArrayList<Map<String, Object>>();
 		
 		String mes;
-		String anio;
+		//String anio;
 		int totalRiesgo;
 
 		PreparedStatement ps = null;
@@ -529,7 +529,7 @@ public class RiesgoDAO {
 			
 			while (rs.next()) {
 				Map<String,Object> mapa = new HashMap<String,Object>();
-				 anio = rs.getString("anio");
+				 //anio = rs.getString("anio");
 				 mes = rs.getString("mes");
 				 totalRiesgo = Integer.parseInt(rs.getString("total"));
 				 

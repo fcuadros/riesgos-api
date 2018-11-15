@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import com.tp2.modulo.sgr.dao.AlertaDAO;
 import com.tp2.modulo.sgr.dao.RiesgoDAO;
@@ -19,7 +18,6 @@ import com.tp2.modulo.sgr.model.NivelRiesgoHistorico;
 import com.tp2.modulo.sgr.model.ObtenerNivelRiesgoHistoricoResponse;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
 import com.tp2.modulo.sgr.model.Riesgo;
-import com.tp2.modulo.sgr.model.Alerta;
 import com.tp2.modulo.sgr.model.TipoRiesgo;
 import com.tp2.modulo.sgr.util.Utilitario;
 
