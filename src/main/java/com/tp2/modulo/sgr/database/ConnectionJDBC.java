@@ -11,11 +11,11 @@ public class ConnectionJDBC {
 	public Connection getConnection() {
 		Connection connection = null;
 		try {
-			//Class.forName("com.mysql.cj.jdbc.Driver");
-			//connection = DriverManager.getConnection("jdbc:mysql://104.154.86.66:3306/dbriesgo?useUnicode=true&"
-			//+ "useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"
-			//+ "serverTimezone=UTC&useSSL=false",
-			//"root","@AccesoTP3");
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			connection = DriverManager.getConnection("jdbc:mysql://104.154.86.66:3306/dbriesgo?useUnicode=true&"
+//			+ "useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&"
+//			+ "serverTimezone=UTC&useSSL=false",
+//			"root","@AccesoTP3");
 			
 			String url = null;
 			if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production) {

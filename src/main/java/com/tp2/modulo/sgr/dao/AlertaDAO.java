@@ -59,6 +59,7 @@ public class AlertaDAO {
 	public boolean registrarAlerta(Alerta alerta) {
 
 		boolean respuesta = false;
+//		String respuesta="Todo bien";
 		Date fechaRegistro = new Date(new java.util.Date().getTime());
 
 		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASI_Alerta(?,?,?,?)}");) {
@@ -73,6 +74,47 @@ public class AlertaDAO {
 			respuesta = true;
 
 		} catch (SQLException sqle) {
+//			respuesta = sqle.getMessage();
+			sqle.printStackTrace();
+		} finally {
+			try {
+				jdbc.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+//				respuesta = e.getMessage();
+			}
+		}
+
+		return respuesta;
+	}
+	
+	public Alerta getAlerta(int idOpcionMenu) {
+		
+		Alerta alerta = new Alerta();
+		
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_AlertaByOpcionMenu(?)}");) {
+			cs.setInt(1, idOpcionMenu);
+			boolean hadResults = cs.execute();
+			
+			System.out.println("Stored procedure called successfully!");
+			
+			while (hadResults) {
+				ResultSet resultSet = cs.getResultSet();
+				
+				while (resultSet.next()) {					
+					alerta.setIdAlerta(resultSet.getInt("cod_alertas"));
+					alerta.setCorreo(resultSet.getString("correo"));
+					alerta.setOpcion(resultSet.getString("cod_opcion_menu"));
+					alerta.setEstado(resultSet.getString("estado"));
+					alerta.setFechaRegistro(resultSet.getDate("fecha_registro"));
+					alerta.setFechaModificacion(resultSet.getDate("fecha_modificacion"));
+				}
+				
+				hadResults = cs.getMoreResults();
+			}
+			
+			cs.close();
+		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} finally {
 			try {
@@ -81,8 +123,9 @@ public class AlertaDAO {
 				e.printStackTrace();
 			}
 		}
-
-		return respuesta;
+		
+		return alerta;
 	}
+	
 
 }

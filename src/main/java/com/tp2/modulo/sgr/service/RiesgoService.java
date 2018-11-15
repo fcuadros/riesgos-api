@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
+import com.tp2.modulo.sgr.dao.AlertaDAO;
 import com.tp2.modulo.sgr.dao.RiesgoDAO;
 import com.tp2.modulo.sgr.model.ActualizarNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.ActualizarNivelRiesgoResponse;
+import com.tp2.modulo.sgr.model.Alerta;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoRequest;
 import com.tp2.modulo.sgr.model.CalcularNivelRiesgoResponse;
 import com.tp2.modulo.sgr.model.Montecarlo;
@@ -16,12 +19,15 @@ import com.tp2.modulo.sgr.model.NivelRiesgoHistorico;
 import com.tp2.modulo.sgr.model.ObtenerNivelRiesgoHistoricoResponse;
 import com.tp2.modulo.sgr.model.RespuestaResponse;
 import com.tp2.modulo.sgr.model.Riesgo;
+import com.tp2.modulo.sgr.model.Alerta;
 import com.tp2.modulo.sgr.model.TipoRiesgo;
 import com.tp2.modulo.sgr.util.Utilitario;
 
 public class RiesgoService {
 
 	RiesgoDAO riesgoDAO = new RiesgoDAO();
+	AlertaDAO alertaDAO = new AlertaDAO();
+	AlertaService alertaService = new AlertaService();
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> obtenerCantRiesgosXControl(int year) {
@@ -167,6 +173,16 @@ public class RiesgoService {
 		} else {
 			respuestaResponse.setCodigoRespuesta("1");
 			respuestaResponse.setMensajeRespuesta("Error");
+		}
+		
+		//Evaluar si corresponde notificar correo
+		Alerta alerta = alertaDAO.getAlerta(63);
+		if(alerta != null){
+			//Si alerta está configura y activada, además riesgo alto
+			if("1".equals(alerta.getEstado()) && 3 == riesgo.getNivelRiesgo() ){
+				//Enviar correo
+				alertaService.enviarMail(riesgo, null, alerta);
+			}
 		}
 		
 		return respuestaResponse;

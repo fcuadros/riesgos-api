@@ -1,6 +1,11 @@
 package com.tp2.modulo.sgr.util;
 
+import java.util.Date;
 import java.util.List;
+
+import com.tp2.modulo.sgr.model.Alerta;
+import com.tp2.modulo.sgr.model.Control;
+import com.tp2.modulo.sgr.model.Riesgo;
 
 public class Utilitario {
 
@@ -95,5 +100,28 @@ public class Utilitario {
 		desvEstandar = Math.sqrt(varianza);
 		
 		return desvEstandar;
+	}
+	
+	public static String formatMailRiesgo(String txt, Riesgo riesgo, Alerta alerta) {
+		 
+		return txt
+				.replace("@NOM_COMPLETO@",
+						riesgo.getPersonaIdentificadora())
+				.replace("@NOMRIESGO@", riesgo.getNombre())
+				.replace("@DESCRIPCION@", riesgo.getDescripcion())
+				.replace("@NIVEL@", String.valueOf(riesgo.getNivelRiesgo()))
+				.replace("@PROBABILIDAD@", String.valueOf(riesgo.getProbabilidad()))
+				.replace("@PERSONA@", riesgo.getPersonaIdentificadora())
+				.replace("@ESCALA@", String.valueOf(riesgo.getIdTipoRiesgo()))
+				.replace("@COSTO@", String.valueOf(riesgo.getCosto()))
+				.replace("@FECHA@", new Date().toString());
+	}
+	
+	public static String formatMailControl(String txt, Control control, Alerta alerta) {
+		 
+		return txt
+				.replace("@NOMBRE@", control.getDescripcion())
+				.replace("@DESCRIPCION@", control.getDescripcion())
+				.replace("@FECHA@", new Date().toString());
 	}
 }
