@@ -23,6 +23,65 @@ public class RiesgoService {
 
 	RiesgoDAO riesgoDAO = new RiesgoDAO();
 	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> obtenerCantRiesgosXControl(int year) {
+		
+		
+		List<Object> cantidadTotalRiesgo = new ArrayList<Object>();
+		
+	
+		
+		
+		List<Object> numTotalRiesgosSinControl = new ArrayList<Object>();
+		
+		for (int i = 0; i < 12; i++) {
+			cantidadTotalRiesgo.add(0);
+			numTotalRiesgosSinControl.add(0);
+		}
+
+		List<Map<String, Object>> cantRiesgosXControlResult = null;
+		if (0 != year) {
+			
+			cantRiesgosXControlResult = new ArrayList<>();
+
+		List<Map<String, Object>> arrayCantTotalRiesgo = (List<Map<String, Object>>) riesgoDAO.obtenerCantidadRiesgoPorFechaSQL(year);
+		List<Map<String, Object>> arrayCantTotalRiesgoSinControl = (List<Map<String, Object>>) riesgoDAO.obtenerCantidadRiesgoSinControlPorFechaSQL(year);
+		
+		
+			for (Map<String, Object> map : arrayCantTotalRiesgo) {
+
+				for (int i = 1; i < 13; i++) {
+					ajustarArrayRiesgoControl(map, i, cantidadTotalRiesgo);
+
+				}
+
+			}
+		
+		
+		for (Map<String, Object> map : arrayCantTotalRiesgoSinControl) {
+			for (int i = 1; i < 13; i++) {
+				ajustarArrayRiesgoControl(map, i, numTotalRiesgosSinControl);
+
+			}	
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("name", "Riesgos totales");
+		map.put("data", cantidadTotalRiesgo);
+		map.put("color", "#006f99");			
+		cantRiesgosXControlResult.add(new HashMap<String, Object>(map));
+		
+		map.clear();
+		map.put("name", "Riesgos sin control asignado");
+		map.put("data", numTotalRiesgosSinControl);
+		map.put("color", "#d73d32");	 //rojo		
+		cantRiesgosXControlResult.add(new HashMap<String, Object>(map));
+		
+			
+		}
+		return cantRiesgosXControlResult;
+	}
+	
 	public CalcularNivelRiesgoResponse calcularNivelRiesgo(CalcularNivelRiesgoRequest request) {
 		CalcularNivelRiesgoResponse response = new CalcularNivelRiesgoResponse();
 		CalcularNivelRiesgoResponse respuestaNivelRiesgo = new CalcularNivelRiesgoResponse();
@@ -50,7 +109,7 @@ public class RiesgoService {
 		}
 		return response;
 	}
-	
+
 	public ActualizarNivelRiesgoResponse actualizarNivelRiesgo(ActualizarNivelRiesgoRequest request) {
 		ActualizarNivelRiesgoResponse response = new ActualizarNivelRiesgoResponse();
 		
@@ -218,5 +277,14 @@ public class RiesgoService {
 		montecarlo.setDesvEstandar(desvEstandar);
 		
 		return montecarlo;
+	}
+	
+	public void ajustarArrayRiesgoControl(Map<String,Object> mapa, int i, List<Object> arrayString){
+		
+		
+		
+		if (mapa.get("meses").equals(String.valueOf(i))) {
+			arrayString.set(i-1, (Object) mapa.get("totalRiesgo"));
+		}
 	}
 }
