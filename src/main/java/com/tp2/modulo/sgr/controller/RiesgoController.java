@@ -126,7 +126,7 @@ public class RiesgoController{
 		return json;
 	}
 	
-	//Simulacion
+	//
 	@POST
 	@Path("/simulacion/{cantSimulacion}")
 	@Consumes(MediaType.APPLICATION_JSON)

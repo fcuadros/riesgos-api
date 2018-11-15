@@ -524,7 +524,6 @@ public class RiesgoDAO {
 		
 		
 		
-		
 		String mes;
 		String anio;
 		int totalRiesgo;

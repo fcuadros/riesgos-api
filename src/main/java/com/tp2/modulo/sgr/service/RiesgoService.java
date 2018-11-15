@@ -260,7 +260,6 @@ public class RiesgoService {
 		
 		return listaTipoRiesgo;
 		
-		
 	}
 	
 	public Montecarlo obtenerPerdidaRiesgos(int cantSimulacion) {
