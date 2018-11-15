@@ -1,5 +1,6 @@
 package com.tp2.modulo.sgr.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,7 +17,9 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.tp2.modulo.sgr.dao.AlertaDAO;
-import com.tp2.modulo.sgr.model.Correo;;
+import com.tp2.modulo.sgr.model.Alerta;
+import com.tp2.modulo.sgr.model.Correo;
+import com.tp2.modulo.sgr.model.RespuestaResponse;;
 
 public class AlertaService {
 	
@@ -95,5 +98,28 @@ public class AlertaService {
 			
 
 		}
-
+		
+		public ArrayList<Alerta> getAlertas() {
+			ArrayList<Alerta> listAlertas = AlertaDAO.getAlertas();		
+			return listAlertas;
+		}
+		
+		public RespuestaResponse registrarAlerta(Alerta alerta) {
+			
+			RespuestaResponse respuestaResponse = new RespuestaResponse();
+			boolean respuestaRegistrarRiesgo = false;
+			
+			respuestaRegistrarRiesgo = AlertaDAO.registrarAlerta(alerta);
+			
+			if (respuestaRegistrarRiesgo) {
+				respuestaResponse.setCodigoRespuesta("0");
+				respuestaResponse.setMensajeRespuesta("Exito");
+			} else {
+				respuestaResponse.setCodigoRespuesta("1");
+				respuestaResponse.setMensajeRespuesta("Error");
+			}
+			
+			return respuestaResponse;
+		}
+		
 	}
