@@ -29,11 +29,11 @@ public class RiesgoController{
 	RiesgoService riesgoService = new RiesgoService();
 	Gson gson = new Gson();
 	
-	//	GET /riesgos - Devuelve una lista de riesgos
-	//	GET /riesgos/12 - Devuelve un riesgo especifico #12
-	//	POST /riesgos - Crea un nuevo riesgo
-	//	PUT /riesgos/12 - Actualiza un riesgo #12
-	//	PATCH /riesgos/12 - Actualiza parcialmente un riesgo #12
+	//	GET    /riesgos - Devuelve una lista de riesgos
+	//	GET    /riesgos/12 - Devuelve un riesgo especifico #12
+	//	POST   /riesgos - Crea un nuevo riesgo
+	//	PUT    /riesgos/12 - Actualiza un riesgo #12
+	//	PATCH  /riesgos/12 - Actualiza parcialmente un riesgo #12
 	//	DELETE /riesgos/12 - Elimina un riesgo #12
 	
 	@GET
