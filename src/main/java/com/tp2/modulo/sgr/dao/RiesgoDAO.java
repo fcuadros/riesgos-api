@@ -404,7 +404,7 @@ public class RiesgoDAO {
 
 		HashMap<Integer, Integer> listaRiegosPorNivel = new HashMap<Integer, Integer>();
 
-		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call s_NumeroRiesgosPorNivelBeta(?,?,?)}");) {
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_NumeroRiesgosPorNivelBeta(?,?,?)}");) {
 
 			cs.setInt(1, anio);
 			cs.setInt(2, mes);
