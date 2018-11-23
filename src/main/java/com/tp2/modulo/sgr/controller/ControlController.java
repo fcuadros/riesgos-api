@@ -36,10 +36,10 @@ public class ControlController {
 	@GET
 	@Path("/{idControl}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getControl() {
+	public String getControl(@PathParam("idControl") int idControl) {
 		
-		ArrayList<Control> listaControles = controlService.getControles();
-		String json = gson.toJson(listaControles);
+		Control control = controlService.getControl(idControl);
+		String json = gson.toJson(control);
 		
 		return json;
 	}

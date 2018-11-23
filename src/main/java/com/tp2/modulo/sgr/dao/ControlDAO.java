@@ -17,7 +17,7 @@ public class ControlDAO {
 		
 		ArrayList<Control> listaControles = new ArrayList<Control>();
 		
-		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Control()}");) {
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Controles()}");) {
 			
 			boolean hadResults = cs.execute();
 			
@@ -56,6 +56,47 @@ public class ControlDAO {
 		}
 		
 		return listaControles;
+	}
+	
+public Control getControl(int idControl) {
+		
+	Control control = new Control();
+	
+	try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_Control(?)}");) {
+		cs.setInt(1, idControl);
+		boolean hadResults = cs.execute();
+		
+		System.out.println("Stored procedure called successfully!");
+		
+		while (hadResults) {
+			ResultSet resultSet = cs.getResultSet();
+			
+			while (resultSet.next()) {					
+				control.setIdControl(resultSet.getInt("cod_Control"));
+				control.setDescripcion(resultSet.getString("tx_descripcion"));
+				control.setTipo(resultSet.getInt("tx_tipo"));
+				control.setResponsable(resultSet.getString("tx_responsable"));
+				control.setEstadoImplementacion(resultSet.getInt("tx_estadoImplemtacion"));
+				control.setEquipoResponsable(resultSet.getString("tx_equipoResponsable"));
+				control.setFechaImplementacion(resultSet.getDate("fe_implementacion"));
+				control.setCosto(resultSet.getDouble("tx_costo"));
+			}
+			
+			hadResults = cs.getMoreResults();
+		}
+		
+		cs.close();
+	} catch (SQLException sqle) {
+		sqle.printStackTrace();
+	} finally {
+		try {
+			jdbc.getConnection().close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	return control;
 	}
 	
 	public boolean registrarControl(Control control) {

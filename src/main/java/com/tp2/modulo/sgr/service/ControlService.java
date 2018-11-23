@@ -20,6 +20,12 @@ public class ControlService {
 		return listaControles;
 	}
 	
+	public Control getControl(int idControl) {
+		Control control = controlDAO.getControl(idControl);
+		
+		return control;
+	}
+	
 	public RespuestaResponse registrarControl(Control control) {
 		
 		RespuestaResponse respuestaResponse = new RespuestaResponse();
