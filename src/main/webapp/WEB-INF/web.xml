@@ -33,9 +33,9 @@
         </init-param>
         <!-- Services location - package -->
         <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
 <!--             <param-value>name.vysoky.example.service</param-value> -->
-			<param-value>com.tp2.modulo.sgr.controller</param-value>
+			<param-value>com.tp2.modulo.sgr.controller.CORSFilter</param-value>
 			
         </init-param>
         <!-- Templates location - relative path -->
