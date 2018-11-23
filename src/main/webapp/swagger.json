@@ -1,0 +1,626 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Api para modulo de Riesgos del Sistema Integrado de INDRA, para el curso de Taller de Proyecto 3 - UPC",
+    "version": "v1.0",
+    "title": "Swagger API Riesgos",
+    "contact": {
+      "email": "omardiaze@gmail.com"
+    },
+    "license": {
+      "name": "Licence Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "riesgos-backend.appspot.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "riesgos",
+      "description": "Acceso a riesgos"
+    },
+    {
+      "name": "controles",
+      "description": "Acceso a controles"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/riesgos": {
+      "get": {
+        "tags": [
+          "riesgos"
+        ],
+        "summary": "Devuelve una lista de riesgos",
+        "description": "",
+        "operationId": "listRiesgos",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Riesgo"
+              }
+            }
+          },
+          "404": {
+            "description": "no se encontraron riesgos"
+          },
+          "405": {
+            "description": "validación de excepción"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "riesgos"
+        ],
+        "summary": "Crea un nuevo riesgo",
+        "description": "",
+        "operationId": "addRiesgo",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto Riesgo que se necesita para realizar un registro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Riesgo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "405": {
+            "description": "entrada inválida"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/riesgos/{riesgoId}": {
+      "get": {
+        "tags": [
+          "riesgos"
+        ],
+        "summary": "Devuelve un riesgo especifico",
+        "description": "",
+        "operationId": "getRiesgoById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de riesgo a retornar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operación exitosa",
+            "schema": {
+              "$ref": "#/definitions/Riesgo"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el riesgo"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "riesgos"
+        ],
+        "summary": "Actualiza un riesgo existente",
+        "description": "",
+        "operationId": "updateRiesgos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de riesgo a actualizar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto Riesgo que se necesita para realizar un registro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Riesgo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operation exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el riesgo"
+          },
+          "405": {
+            "description": "validación de excepción"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "riesgos"
+        ],
+        "summary": "Elimina un riesgo",
+        "description": "",
+        "operationId": "deleteRiesgo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de riesgo a eliminar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operation exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el riesgo"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/controles": {
+      "get": {
+        "tags": [
+          "controles"
+        ],
+        "summary": "Devuelve una lista de controles",
+        "description": "",
+        "operationId": "listControles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Control"
+              }
+            }
+          },
+          "404": {
+            "description": "no se encontraron controles"
+          },
+          "405": {
+            "description": "validación de excepción"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "controles"
+        ],
+        "summary": "Crea un nuevo control",
+        "description": "",
+        "operationId": "addControles",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto Control que se necesita para realizar un registro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Control"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operacion exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "405": {
+            "description": "entrada inválida"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/controles/{riesgoId}": {
+      "get": {
+        "tags": [
+          "controles"
+        ],
+        "summary": "Devuelve un control especifico",
+        "description": "",
+        "operationId": "getControlById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de control a retornar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operación exitosa",
+            "schema": {
+              "$ref": "#/definitions/Control"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el control"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "controles"
+        ],
+        "summary": "Actualiza un control existente",
+        "description": "",
+        "operationId": "updateControles",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de control a actualizar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Objeto Control que se necesita para realizar un registro",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Control"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operation exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el control"
+          },
+          "405": {
+            "description": "validación de excepción"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "controles"
+        ],
+        "summary": "Elimina un control",
+        "description": "",
+        "operationId": "deleteControl",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "riesgoId",
+            "in": "path",
+            "description": "ID de control a eliminar",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "operation exitosa",
+            "schema": {
+              "$ref": "#/definitions/RespuestaResponse"
+            }
+          },
+          "400": {
+            "description": "el ID ingresado no es válido"
+          },
+          "404": {
+            "description": "no se encontró el control"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://riesgos-backend.appspot.com/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Riesgo": {
+      "type": "object",
+      "required": [
+        "nombre",
+        "descripcion",
+        "tipo",
+        "costo",
+        "probabilidad",
+        "nivelRiesgo",
+        "personaIdentificadora"
+      ],
+      "properties": {
+        "riesgoId": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "nombre": {
+          "type": "string",
+          "example": "nombre de riesgo"
+        },
+        "descripcion": {
+          "type": "string",
+          "example": "descripcion de riesgo"
+        },
+        "personaIdentificadora": {
+          "type": "string",
+          "example": "nombre de persona"
+        },
+        "tipo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "nivelRiesgo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "costo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100
+        },
+        "probabilidad": {
+          "type": "integer",
+          "format": "int64",
+          "example": 0.5
+        },
+        "idTipoRiesgo": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        }
+      }
+    },
+    "Control": {
+      "type": "object",
+      "required": [
+        "descripcion",
+        "tipo",
+        "responsable",
+        "estadoImplementacion",
+        "equipoResponsable",
+        "fechaImplementacion",
+        "costo",
+        "idRiesgo"
+      ],
+      "properties": {
+        "idControl": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "descripcion": {
+          "type": "string",
+          "example": "nombre de control"
+        },
+        "tipo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "responsable": {
+          "type": "string",
+          "example": "nombre de responsable"
+        },
+        "estadoImplementacion": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1
+        },
+        "equipoResponsable": {
+          "type": "string",
+          "example": "nombre de equipo"
+        },
+        "fechaImplementacion": {
+          "type": "string",
+          "format": "yyyy-MM-dd",
+          "example": "2018-11-15"
+        },
+        "costo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 100
+        },
+        "idRiesgo": {
+          "type": "integer",
+          "format": "int64",
+          "example": 20
+        }
+      }
+    },
+    "RespuestaResponse": {
+      "type": "object",
+      "properties": {
+        "codigoRespuesta": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mensajeRespuesta": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

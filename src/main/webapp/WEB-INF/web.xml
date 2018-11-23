@@ -29,7 +29,7 @@
         <!-- Static content definition -->
         <init-param>
             <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
-            <param-value>(/(css|img|js)/.*)|(/favicon\.ico)|(/robots\.txt)</param-value>
+            <param-value>(/(css|img|js|json)/.*)|(/favicon\.ico)|(/robots\.txt)|(/swagger\.json)</param-value>
         </init-param>
         <!-- Services location - package -->
         <init-param>
