@@ -72,7 +72,7 @@ public class ControlDAO {
 			cs.setString(5, control.getEquipoResponsable());
 			cs.setDate(6, fechaImplementacion);
 			cs.setDouble(7, control.getCosto());
-			cs.setInt(8, control.getRIESGO_riesgoId());
+			cs.setInt(8, control.getIdRiesgo());
 			cs.execute();
 			System.out.println("Stored procedure called successfully!");
 			cs.close();
@@ -105,7 +105,7 @@ public class ControlDAO {
 			cs.setString(6, control.getEquipoResponsable());
 			cs.setDate(7, fechaImplementacion);
 			cs.setDouble(8, control.getCosto());
-			cs.setInt(9, control.getRIESGO_riesgoId());
+			cs.setInt(9, control.getIdRiesgo());
 			cs.execute();
 			System.out.println("Stored procedure called successfully!");
 			cs.close();
