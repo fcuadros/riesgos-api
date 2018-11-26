@@ -21,8 +21,8 @@
   		<jersey.version>1.19.4</jersey.version>
   		
   		<!-- Conexion a base de datos -->
-  		<cloudsql.url>jdbc:google:mysql://gleaming-nomad-220720:us-central1:dbindra/dbriesgo</cloudsql.url>
-    	<cloudsql.url.dev>jdbc:mysql://104.154.86.66/dbriesgo</cloudsql.url.dev>
+  		<cloudsql.url>jdbc:google:mysql://indra-riesgos-api:southamerica-east1:indra/dbriesgo</cloudsql.url>
+    	<cloudsql.url.dev>jdbc:mysql://35.199.98.126/dbriesgo</cloudsql.url.dev>
     	
 	</properties>
 

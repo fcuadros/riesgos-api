@@ -1,8 +1,8 @@
-account.email=riesgos.tp3@gmail.com
+account.email=riesgos.modulos.indra@gmail.com
 eclipse.preferences.version=1
 include.optional.configuration.files=true
 project.bucket=
-project.id=riesgos-backend
+project.id=indra-riesgos-api
 project.previousVersion.stop=true
 project.promote=true
 project.version=
