@@ -153,6 +153,11 @@ public class RiesgoService {
 		return listaRiesgos;
 	}
 	
+	public ArrayList<Riesgo> getRiesgosSelect() {
+		ArrayList<Riesgo> listaRiesgos = riesgoDAO.getRiesgosSelect();		
+		return listaRiesgos;
+	}
+	
 	public Riesgo getRiesgo(int idRiesgo) {
 		Riesgo riesgo = riesgoDAO.getRiesgo(idRiesgo);		
 		return riesgo;

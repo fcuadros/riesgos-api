@@ -91,6 +91,17 @@ public class RiesgoController{
 	}
 	
 	@GET
+	@Path("/select")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getRiesgosSelect() {
+		
+		ArrayList<Riesgo> listaRiesgos = riesgoService.getRiesgosSelect();
+		String json = gson.toJson(listaRiesgos);
+		
+		return json;
+	}
+	
+	@GET
 	@Path("/obtenerNumeroRiegosPorNivel")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

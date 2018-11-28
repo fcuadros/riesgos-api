@@ -244,6 +244,45 @@ public class RiesgoDAO {
 		return listaRiesgos;
 	}
 	
+	public ArrayList<Riesgo> getRiesgosSelect() {
+		
+		ArrayList<Riesgo> listaRiesgos = new ArrayList<Riesgo>();
+		
+		try (CallableStatement cs = jdbc.getConnection().prepareCall("{call INDRASS_RiesgosSelect()}");) {
+			
+			boolean hadResults = cs.execute();
+			
+			System.out.println("Stored procedure called successfully!");
+			
+			while (hadResults) {
+				ResultSet resultSet = cs.getResultSet();
+				
+				while (resultSet.next()) {
+					Riesgo riesgo = new Riesgo();
+					
+					riesgo.setRiesgoId(resultSet.getInt("cod_riesgo"));
+					riesgo.setNombre(resultSet.getString("no_riesgo"));
+					
+					listaRiesgos.add(riesgo);
+				}
+				
+				hadResults = cs.getMoreResults();
+			}
+			
+			cs.close();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			try {
+				jdbc.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return listaRiesgos;
+	}
+	
 	public Riesgo getRiesgo(int idRiesgo) {
 		
 		Riesgo riesgo = new Riesgo();
